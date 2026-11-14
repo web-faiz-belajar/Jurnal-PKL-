@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>Jurnal PKL Digital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-content">
+      <span class="tag">PORTAL SISWA</span>
+      <h1>Jurnal Harian PKL</h1>
+      <p>Catat dan laporkan kegiatan Praktik Kerja Lapangan Anda.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="intro">
+      <h2>Formulir Laporan Kegiatan</h2>
+      <p>Silakan isi formulir berikut dengan data yang benar.</p>
+      <p class="required">* Wajib diisi</p>
+    </section>
+
+    <form id="jurnalForm">
+
+      <div class="form-group">
+        <label for="tanggal">Tanggal kegiatan *</label>
+        <input type="date" id="tanggal" required>
+      </div>
+
+      <div class="form-group">
+        <label for="nama">Nama lengkap *</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+      </div>
+
+      <div class="form-group">
+        <label for="kelas">Kelas *</label>
+        <select id="kelas" required>
+          <option value="">Pilih kelas</option>
+          <option>XII TJKT 1</option>
+          <option>XII TJKT 2</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="pembimbing">Nama pembimbing *</label>
+        <input type="text" id="pembimbing" placeholder="Nama guru pembimbing" required>
+      </div>
+
+      <div class="form-group">
+        <label for="perusahaan">Nama perusahaan / instansi *</label>
+        <input type="text" id="perusahaan" placeholder="Tempat melaksanakan PKL" required>
+      </div>
+
+      <div class="form-group">
+        <label for="kegiatan">Kegiatan yang dikerjakan *</label>
+        <textarea id="kegiatan" rows="5" placeholder="Jelaskan kegiatan PKL hari ini..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="dokumentasi">Dokumentasi kegiatan</label>
+        <input type="file" id="dokumentasi" accept="image/*">
+        <small>Unggah foto dokumentasi kegiatan (maksimal 5 MB).</small>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        Kirim Laporan
+      </button>
+
+      <p id="status"></p>
+
+    </form>
+
+    <footer>
+      <p>Jurnal PKL Digital</p>
+      <small>Portal Pelaporan Kegiatan Siswa</small>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
