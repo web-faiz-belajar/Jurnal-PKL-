@@ -28,70 +28,59 @@
   </main>
 
   <script>
-const report = JSON.parse(
-  sessionStorage.getItem("jurnalHasil") || "null"
-);
+    const report = JSON.parse(
+      sessionStorage.getItem("jurnalHasil") || "null"
+    );
 
-const status = sessionStorage.getItem("jurnalStatus");
-const messageText = sessionStorage.getItem("jurnalPesan");
+    const success = sessionStorage.getItem("jurnalStatus") === "success";
 
-const icon = document.getElementById("resultIcon");
-const title = document.getElementById("resultTitle");
-const message = document.getElementById("resultMessage");
-const details = document.getElementById("reportDetails");
+    const icon = document.getElementById("resultIcon");
+    const title = document.getElementById("resultTitle");
+    const message = document.getElementById("resultMessage");
+    const details = document.getElementById("reportDetails");
 
-if (status === "success") {
-  icon.textContent = "✓";
-  title.textContent = "Laporan berhasil dikirim";
-  message.textContent = messageText || "Laporan berhasil disimpan.";
-} else if (status === "error") {
-  icon.textContent = "!";
-  icon.classList.add("error");
-  title.textContent = "Laporan gagal dikirim";
-  message.textContent = messageText || "Server menolak laporan.";
-  message.style.color = "#f87171";
-} else {
-  icon.textContent = "?";
-  icon.classList.add("error");
-  title.textContent = "Status belum dapat dipastikan";
-  message.textContent = messageText ||
-    "Periksa Google Sheets sebelum mencoba mengirim ulang.";
-}
+    if (!success) {
+      icon.textContent = "!";
+      title.textContent = "Laporan gagal dikirim";
+      message.textContent =
+        "Laporan belum berhasil dikirim. Silakan kembali dan coba lagi.";
+      icon.classList.add("error");
+    }
 
-if (report) {
-  const fields = [
-    ["Tanggal", report.tanggal],
-    ["Nama", report.nama],
-    ["Kelas", report.kelas],
-    ["Pembimbing", report.pembimbing],
-    ["Perusahaan", report.perusahaan],
-    ["Kegiatan", report.kegiatan]
-  ];
+    if (report) {
+      const fields = [
+        ["Tanggal", report.tanggal],
+        ["Nama", report.nama],
+        ["Kelas", report.kelas],
+        ["Pembimbing", report.pembimbing],
+        ["Perusahaan", report.perusahaan],
+        ["Kegiatan", report.kegiatan]
+      ];
 
-  fields.forEach(([label, value]) => {
-    const item = document.createElement("div");
-    item.className = "detail-item";
+      fields.forEach(([label, value]) => {
+        const item = document.createElement("div");
+        item.className = "detail-item";
 
-    const name = document.createElement("span");
-    name.textContent = label;
+        const name = document.createElement("span");
+        name.textContent = label;
 
-    const content = document.createElement("strong");
-    content.textContent = value || "-";
+        const content = document.createElement("strong");
+        content.textContent = value || "-";
 
-    item.append(name, content);
-    details.appendChild(item);
-  });
+        item.append(name, content);
+        details.appendChild(item);
+      });
 
-  if (report.foto) {
-    const image = document.createElement("img");
-    image.src = report.foto;
-    image.alt = "Dokumentasi kegiatan";
-    image.className = "result-photo";
-    details.appendChild(image);
-  }
-} else {
-  details.textContent = "Data laporan tidak ditemukan.";
-}
+      if (report.foto) {
+        const image = document.createElement("img");
+        image.src = report.foto;
+        image.alt = "Dokumentasi kegiatan";
+        image.className = "result-photo";
+        details.appendChild(image);
+      }
+    } else {
+      details.textContent = "Data laporan tidak ditemukan.";
+    }
   </script>
 
 </body>
