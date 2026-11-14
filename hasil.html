@@ -4,17 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hasil Pengiriman - Jurnal PKL</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#080d18">
+
+  <title>Hasil Laporan - Jurnal PKL</title>
+
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
   <main class="result-container">
+
     <div class="result-icon" id="resultIcon">✓</div>
 
-    <h1 id="resultTitle">Laporan berhasil dikirim</h1>
+    <h1 id="resultTitle">Memeriksa laporan...</h1>
+
     <p id="resultMessage">
-      Terima kasih, laporan PKL kamu telah dikirim.
+      Mohon tunggu sebentar.
     </p>
 
     <section class="result-details">
@@ -22,32 +27,61 @@
       <div id="reportDetails"></div>
     </section>
 
-    <a href="index.html" class="back-button">
+    <a href="./index.html" class="back-button">
       Kembali ke Formulir
     </a>
+
   </main>
 
   <script>
-    const report = JSON.parse(
-      sessionStorage.getItem("jurnalHasil") || "null"
-    );
-
-    const success = sessionStorage.getItem("jurnalStatus") === "success";
-
     const icon = document.getElementById("resultIcon");
     const title = document.getElementById("resultTitle");
     const message = document.getElementById("resultMessage");
     const details = document.getElementById("reportDetails");
 
-    if (!success) {
-      icon.textContent = "!";
-      title.textContent = "Laporan gagal dikirim";
-      message.textContent =
-        "Laporan belum berhasil dikirim. Silakan kembali dan coba lagi.";
-      icon.classList.add("error");
+    let report = null;
+
+    try {
+      report = JSON.parse(
+        sessionStorage.getItem("jurnalHasil") || "null"
+      );
+    } catch (error) {
+      report = null;
     }
 
+    const status = sessionStorage.getItem("jurnalStatus");
+    const messageText = sessionStorage.getItem("jurnalPesan");
+
+    // STATUS LAPORAN
+    if (status === "success") {
+
+      icon.textContent = "✓";
+      title.textContent = "Laporan berhasil dikirim";
+      message.textContent =
+        messageText || "Laporan berhasil disimpan.";
+
+    } else if (status === "error") {
+
+      icon.textContent = "!";
+      icon.classList.add("error");
+      title.textContent = "Laporan gagal dikirim";
+      message.textContent =
+        messageText || "Laporan gagal disimpan.";
+      message.style.color = "#f87171";
+
+    } else {
+
+      icon.textContent = "?";
+      icon.classList.add("error");
+      title.textContent = "Status belum dipastikan";
+      message.textContent =
+        messageText ||
+        "Periksa Google Sheets sebelum mencoba mengirim ulang.";
+    }
+
+    // DETAIL LAPORAN
     if (report) {
+
       const fields = [
         ["Tanggal", report.tanggal],
         ["Nama", report.nama],
@@ -58,6 +92,7 @@
       ];
 
       fields.forEach(([label, value]) => {
+
         const item = document.createElement("div");
         item.className = "detail-item";
 
@@ -67,19 +102,36 @@
         const content = document.createElement("strong");
         content.textContent = value || "-";
 
-        item.append(name, content);
+        item.appendChild(name);
+        item.appendChild(content);
+
         details.appendChild(item);
+
       });
 
+      // FOTO DOKUMENTASI
       if (report.foto) {
+
+        const photoTitle = document.createElement("h3");
+        photoTitle.textContent = "Dokumentasi";
+        photoTitle.style.color = "var(--text)";
+        photoTitle.style.marginTop = "18px";
+
         const image = document.createElement("img");
         image.src = report.foto;
-        image.alt = "Dokumentasi kegiatan";
+        image.alt = "Dokumentasi kegiatan PKL";
         image.className = "result-photo";
+
+        details.appendChild(photoTitle);
         details.appendChild(image);
+
       }
+
     } else {
-      details.textContent = "Data laporan tidak ditemukan.";
+
+      details.textContent =
+        "Data laporan belum tersedia.";
+
     }
   </script>
 
