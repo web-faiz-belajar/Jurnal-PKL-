@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hasil Pengiriman - Jurnal PKL</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="result-container">
+    <div class="result-icon" id="resultIcon">✓</div>
+
+    <h1 id="resultTitle">Laporan berhasil dikirim</h1>
+    <p id="resultMessage">
+      Terima kasih, laporan PKL kamu telah dikirim.
+    </p>
+
+    <section class="result-details">
+      <h2>Detail Laporan</h2>
+      <div id="reportDetails"></div>
+    </section>
+
+    <a href="index.html" class="back-button">
+      Kembali ke Formulir
+    </a>
+  </main>
+
+  <script>
+    const report = JSON.parse(
+      sessionStorage.getItem("jurnalHasil") || "null"
+    );
+
+    const success = sessionStorage.getItem("jurnalStatus") === "success";
+
+    const icon = document.getElementById("resultIcon");
+    const title = document.getElementById("resultTitle");
+    const message = document.getElementById("resultMessage");
+    const details = document.getElementById("reportDetails");
+
+    if (!success) {
+      icon.textContent = "!";
+      title.textContent = "Laporan gagal dikirim";
+      message.textContent =
+        "Laporan belum berhasil dikirim. Silakan kembali dan coba lagi.";
+      icon.classList.add("error");
+    }
+
+    if (report) {
+      const fields = [
+        ["Tanggal", report.tanggal],
+        ["Nama", report.nama],
+        ["Kelas", report.kelas],
+        ["Pembimbing", report.pembimbing],
+        ["Perusahaan", report.perusahaan],
+        ["Kegiatan", report.kegiatan]
+      ];
+
+      fields.forEach(([label, value]) => {
+        const item = document.createElement("div");
+        item.className = "detail-item";
+
+        const name = document.createElement("span");
+        name.textContent = label;
+
+        const content = document.createElement("strong");
+        content.textContent = value || "-";
+
+        item.append(name, content);
+        details.appendChild(item);
+      });
+
+      if (report.foto) {
+        const image = document.createElement("img");
+        image.src = report.foto;
+        image.alt = "Dokumentasi kegiatan";
+        image.className = "result-photo";
+        details.appendChild(image);
+      }
+    } else {
+      details.textContent = "Data laporan tidak ditemukan.";
+    }
+  </script>
+
+</body>
+</html>
