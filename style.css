@@ -349,3 +349,64 @@ input[type="file"]::file-selector-button:hover {
 input[type="file"][hidden] {
   display: none !important;
 }
+
+/* ===== PHOTO PREVIEW ===== */
+
+.preview-dokumentasi {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 12px;
+  background: var(--card-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.preview-dokumentasi[hidden] {
+  display: none !important;
+}
+
+.preview-dokumentasi img {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #080d18;
+}
+
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+.preview-info strong {
+  color: var(--text);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.preview-info span {
+  color: #60a5fa;
+  font-size: 11px;
+}
+
+.preview-remove {
+  width: auto;
+  padding: 9px 12px;
+  background: rgba(239, 68, 68, .13);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, .2);
+  border-radius: 9px;
+  font-size: 11px;
+  box-shadow: none;
+}
+
+.preview-remove:hover {
+  background: rgba(239, 68, 68, .22);
+  box-shadow: none;
+  transform: none;
+}
