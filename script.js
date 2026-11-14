@@ -1,5 +1,5 @@
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxj_g35Z7osF60Ocupxd9X4Rg2fjFDEZR1TmFWbaRp1iwSCyaRWFxW6bNA3Mbounc_c/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyVw_wNNdvcSkBzEPmxKJ4HekSuZskSIZ5ysDbNGVPfiJ5bVvdN1Jcu0vQ32lL3VmIe/exec";
 
 const form = document.getElementById("jurnalForm");
 const statusText = document.getElementById("status");
