@@ -4,28 +4,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#080d18">
+
   <title>Jurnal PKL Digital</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+  <!-- HEADER -->
   <header class="hero">
     <div class="hero-content">
       <span class="tag">PORTAL SISWA</span>
+
       <h1>Jurnal Harian PKL</h1>
-      <p>Catat dan laporkan kegiatan Praktik Kerja Lapangan Anda.</p>
+
+      <p>
+        Catat dan laporkan kegiatan Praktik Kerja Lapangan Anda.
+      </p>
     </div>
   </header>
 
+  <!-- CONTENT -->
   <main class="container">
 
     <section class="intro">
       <h2>Formulir Laporan Kegiatan</h2>
-      <p>Silakan isi formulir berikut dengan data yang benar.</p>
+
+      <p>
+        Silakan isi formulir berikut dengan data yang benar.
+      </p>
+
       <p class="required">* Wajib diisi</p>
     </section>
 
+    <!-- FORM -->
     <form id="jurnalForm">
 
       <div class="form-group">
@@ -35,62 +49,132 @@
 
       <div class="form-group">
         <label for="nama">Nama lengkap *</label>
-        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+        <input
+          type="text"
+          id="nama"
+          placeholder="Masukkan nama lengkap"
+          required
+        >
       </div>
 
       <div class="form-group">
         <label for="kelas">Kelas *</label>
+
         <select id="kelas" required>
           <option value="">Pilih kelas</option>
-          <option>XII TJKT 1</option>
-          <option>XII TJKT 2</option>
+          <option value="XII TJKT 1">XII TJKT 1</option>
+          <option value="XII TJKT 2">XII TJKT 2</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="pembimbing">Nama pembimbing *</label>
-        <input type="text" id="pembimbing" placeholder="Nama guru pembimbing" required>
+
+        <input
+          type="text"
+          id="pembimbing"
+          placeholder="Nama guru pembimbing"
+          required
+        >
       </div>
 
       <div class="form-group">
-        <label for="perusahaan">Nama perusahaan / instansi *</label>
-        <input type="text" id="perusahaan" placeholder="Tempat melaksanakan PKL" required>
+        <label for="perusahaan">
+          Nama perusahaan / instansi *
+        </label>
+
+        <input
+          type="text"
+          id="perusahaan"
+          placeholder="Tempat melaksanakan PKL"
+          required
+        >
       </div>
 
       <div class="form-group">
-        <label for="kegiatan">Kegiatan yang dikerjakan *</label>
-        <textarea id="kegiatan" rows="5" placeholder="Jelaskan kegiatan PKL hari ini..." required></textarea>
+        <label for="kegiatan">
+          Kegiatan yang dikerjakan *
+        </label>
+
+        <textarea
+          id="kegiatan"
+          rows="5"
+          placeholder="Jelaskan kegiatan PKL hari ini..."
+          required
+        ></textarea>
       </div>
 
-<div class="form-group">
-  <label for="dokumentasi">Dokumentasi kegiatan</label>
+      <!-- DOKUMENTASI -->
+      <div class="form-group">
 
-  <label for="dokumentasi" class="upload-card">
-    <div class="upload-icon">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 16V4"/>
-        <path d="m7 9 5-5 5 5"/>
-        <path d="M20 16.5v2A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-2"/>
-      </svg>
-    </div>
+        <label for="dokumentasi">
+          Dokumentasi kegiatan
+        </label>
 
-    <strong>Pilih foto dokumentasi</strong>
-    <span>Ketuk untuk memilih gambar dari perangkat</span>
-    <div class="upload-button">Pilih Foto</div>
-  </label>
+        <label for="dokumentasi" class="upload-card">
 
-  <div id="previewDokumentasi" class="preview-dokumentasi" hidden>
-  <img id="previewFoto" alt="Preview dokumentasi">
-  <div class="preview-info">
-    <strong id="namaFoto">Nama foto</strong>
-    <span>Foto berhasil dipilih</span>
-  </div>
-</div>
+          <div class="upload-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="32"
+              height="32"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 16V4"/>
+              <path d="m7 9 5-5 5 5"/>
+              <path d="M20 16.5v2A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-2"/>
+            </svg>
+          </div>
 
-  <small>Format gambar • Maksimal 5 MB</small>
-</div>
+          <strong>Pilih foto dokumentasi</strong>
 
+          <span>
+            Ketuk untuk memilih gambar dari perangkat
+          </span>
 
+          <div class="upload-button">
+            Pilih Foto
+          </div>
+
+        </label>
+
+        <input
+          type="file"
+          id="dokumentasi"
+          accept="image/*"
+          hidden
+        >
+
+        <!-- PREVIEW FOTO -->
+        <div
+          id="previewDokumentasi"
+          class="preview-dokumentasi"
+          hidden
+        >
+
+          <img
+            id="previewFoto"
+            alt="Preview dokumentasi"
+          >
+
+          <div class="preview-info">
+            <strong id="namaFoto">Nama foto</strong>
+            <span>Foto berhasil dipilih</span>
+          </div>
+
+        </div>
+
+        <small>
+          Format gambar • Maksimal 5 MB
+        </small>
+
+      </div>
+
+      <!-- SUBMIT -->
       <button type="submit" id="submitBtn">
         Kirim Laporan
       </button>
@@ -99,6 +183,7 @@
 
     </form>
 
+    <!-- FOOTER -->
     <footer>
       <p>Jurnal PKL Digital</p>
       <small>Portal Pelaporan Kegiatan Siswa</small>
@@ -106,6 +191,8 @@
 
   </main>
 
+  <!-- JAVASCRIPT -->
   <script src="script.js"></script>
+
 </body>
 </html>
