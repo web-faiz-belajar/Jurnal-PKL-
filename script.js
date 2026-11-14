@@ -36,7 +36,7 @@ function clearPreview() {
   previewBox.hidden = true;
 }
 
-// Ketika pengguna memilih foto
+// Pilih foto
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
 
@@ -46,35 +46,28 @@ fileInput.addEventListener("change", () => {
 
   if (!file.type.startsWith("image/")) {
     statusText.textContent = "File harus berupa gambar.";
-    statusText.style.color = "#f87171";
     fileInput.value = "";
     return;
   }
 
   if (file.size > 5 * 1024 * 1024) {
     statusText.textContent = "Ukuran foto maksimal 5 MB.";
-    statusText.style.color = "#f87171";
     fileInput.value = "";
     return;
   }
 
-  // Tampilkan foto
   previewURL = URL.createObjectURL(file);
   previewImage.src = previewURL;
-
   fileName.textContent = file.name;
-
   previewBox.hidden = false;
-
   statusText.textContent = "";
 });
 
-// Tombol hapus foto
+// Hapus foto
 removeButton.addEventListener("click", () => {
   fileInput.value = "";
   clearPreview();
   statusText.textContent = "Foto dihapus.";
-  statusText.style.color = "#94a3b8";
 });
 
 // Kompres foto
@@ -91,7 +84,6 @@ function compressImage(file) {
 
     image.onload = () => {
       const canvas = document.createElement("canvas");
-
       const maxWidth = 1280;
       const scale = Math.min(1, maxWidth / image.width);
 
@@ -126,12 +118,12 @@ form.addEventListener("submit", async (event) => {
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Mengirim laporan...";
-  statusText.textContent = "Sedang memproses data...";
+  statusText.textContent = "Sedang mengirim laporan...";
 
   try {
     const file = fileInput.files[0];
-
     let fileData = null;
+    let photoPreview = "";
 
     if (file) {
       if (!file.type.startsWith("image/")) {
@@ -142,11 +134,15 @@ form.addEventListener("submit", async (event) => {
         throw new Error("Ukuran foto maksimal 5 MB.");
       }
 
+      const compressed = await compressImage(file);
+
       fileData = {
         name: file.name.replace(/\.[^.]+$/, "") + ".jpg",
         type: "image/jpeg",
-        data: await compressImage(file)
+        data: compressed
       };
+
+      photoPreview = "data:image/jpeg;base64," + compressed;
     }
 
     const data = {
@@ -159,29 +155,62 @@ form.addEventListener("submit", async (event) => {
       file: fileData
     };
 
-    await fetch(API_URL, {
+    // Simpan detail untuk halaman hasil
+    const report = {
+      tanggal: data.tanggal,
+      nama: data.nama,
+      kelas: data.kelas,
+      pembimbing: data.pembimbing,
+      perusahaan: data.perusahaan,
+      kegiatan: data.kegiatan,
+      foto: photoPreview
+    };
+
+    sessionStorage.setItem(
+      "jurnalHasil",
+      JSON.stringify(report)
+    );
+
+    // Kirim ke Google Apps Script
+    const response = await fetch(API_URL, {
       method: "POST",
-      mode: "no-cors",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify(data)
     });
 
-    statusText.textContent =
-      "Permintaan telah dikirim. Periksa Google Sheets untuk memastikan laporan tersimpan.";
+    const result = await response.json();
 
-    statusText.style.color = "#60a5fa";
+    if (!result.success) {
+      sessionStorage.setItem("jurnalStatus", "error");
+      sessionStorage.setItem(
+        "jurnalPesan",
+        result.message || "Laporan gagal disimpan."
+      );
 
-    form.reset();
-    clearPreview();
+      window.location.href = "hasil.html";
+      return;
+    }
 
-    document.getElementById("tanggal").value =
-      new Date().toLocaleDateString("en-CA");
+    sessionStorage.setItem("jurnalStatus", "success");
+    sessionStorage.setItem(
+      "jurnalPesan",
+      "Laporan berhasil disimpan."
+    );
+
+    window.location.href = "hasil.html";
 
   } catch (error) {
-    statusText.textContent = error.message;
-    statusText.style.color = "#f87171";
+    // Koneksi gagal: belum tentu server gagal menyimpan.
+    sessionStorage.setItem("jurnalStatus", "unknown");
+    sessionStorage.setItem(
+      "jurnalPesan",
+      "Respons server tidak dapat dipastikan. Periksa Google Sheets sebelum mengirim ulang agar tidak terjadi laporan ganda."
+    );
+
+    window.location.href = "hasil.html";
+
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = "Kirim Laporan";
