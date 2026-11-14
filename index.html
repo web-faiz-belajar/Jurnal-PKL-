@@ -62,11 +62,28 @@
         <textarea id="kegiatan" rows="5" placeholder="Jelaskan kegiatan PKL hari ini..." required></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="dokumentasi">Dokumentasi kegiatan</label>
-        <input type="file" id="dokumentasi" accept="image/*">
-        <small>Unggah foto dokumentasi kegiatan (maksimal 5 MB).</small>
-      </div>
+<div class="form-group">
+  <label for="dokumentasi">Dokumentasi kegiatan</label>
+
+  <label for="dokumentasi" class="upload-card">
+    <div class="upload-icon">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 16V4"/>
+        <path d="m7 9 5-5 5 5"/>
+        <path d="M20 16.5v2A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-2"/>
+      </svg>
+    </div>
+
+    <strong>Pilih foto dokumentasi</strong>
+    <span>Ketuk untuk memilih gambar dari perangkat</span>
+    <div class="upload-button">Pilih Foto</div>
+  </label>
+
+  <input type="file" id="dokumentasi" accept="image/*" hidden>
+
+  <small>Format gambar • Maksimal 5 MB</small>
+</div>
+
 
       <button type="submit" id="submitBtn">
         Kirim Laporan
